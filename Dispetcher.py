@@ -892,37 +892,19 @@ class MyWindow(QWidget):
 
 
     def add_boarding_audio_to_queue(self):
-        # Добавляем аудио о посадке по билетам в очередь
         base_path = os.path.dirname(os.path.abspath(__file__))
         sounds_folder = "Sound\drygoe"
-        boarding_audio_filename = "Посадка-по-билетам.mp3"  # Имя файла аудио о посадке по билетам
+        boarding_audio_filename = "Посадка-по-билетам.mp3"
         boarding_audio_path = os.path.join(base_path, sounds_folder, boarding_audio_filename)
-        
 
-        # Проверяем, воспроизводится ли аудио
         is_audio_playing = self.is_audio_playing()
 
-        if is_audio_playing and not self.audio_queue.empty():
-            boarding_index = 52  # Вы можете выбрать уникальный индекс для аудио о посадке по билетам
-            # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
-            self.audio_queue.put((boarding_index, boarding_audio_path))
-            boarding_message = "Воспроизводится аудио о посадке по билетам"
-            self.add_message(boarding_message, label=None)
+        boarding_index = 52 if is_audio_playing or self.message_list.count() != 0 else 0
+        self.audio_queue.put((boarding_index, boarding_audio_path))
+        boarding_message = "Воспроизводится аудио о посадке по билетам"
+        self.add_message(boarding_message, label=None)
 
-        elif self.message_list.count() != 0:
-            boarding_index = 52  # Вы можете выбрать уникальный индекс для аудио о посадке по билетам
-            # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
-            self.audio_queue.put((boarding_index, boarding_audio_path))
-            boarding_message = "Воспроизводится аудио о посадке по билетам"
-            self.add_message(boarding_message, label=None)
-            self.play_from_queue()
-
-        else:
-            boarding_index = 0
-            # Если аудио не воспроизводится или виджет пуст, добавляем сообщение в начало
-            self.audio_queue.put((boarding_index, boarding_audio_path))
-            boarding_message = "Воспроизводится аудио о посадке по билетам"
-            self.add_message(boarding_message, label=None)
+        if not is_audio_playing or self.message_list.count() != 0:
             self.play_from_queue()
 
         self.index_history[boarding_index] = boarding_audio_path
@@ -931,72 +913,41 @@ class MyWindow(QWidget):
    
 
     def add_traffic_audio_to_queue(self):
-        # Добавляем аудио о проезжей части в очередь
         base_path = os.path.dirname(os.path.abspath(__file__))
         sounds_folder = "Sound\drygoe"
-        traffic_audio_filename = "Проезжая-часть.mp3"  # Имя файла аудио о проезжей части
+        traffic_audio_filename = "Проезжая-часть.mp3"
         traffic_audio_path = os.path.join(base_path, sounds_folder, traffic_audio_filename)
-    
 
-        # Проверяем, воспроизводится ли аудио
         is_audio_playing = self.is_audio_playing()
 
-        if is_audio_playing and not self.audio_queue.empty():
-            traffic_index = 54  # Вы можете выбрать уникальный индекс для аудио о проезжей части
-            # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
-            self.audio_queue.put((traffic_index, traffic_audio_path))
-            traffic_message = "Воспроизводится аудио о проезжей части"
-            self.add_message(traffic_message, label=None)
-        elif self.message_list.count() != 0:
-            traffic_index = 54  # Вы можете выбрать уникальный индекс для аудио о проезжей части
-            # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
-            self.audio_queue.put((traffic_index, traffic_audio_path))
-            traffic_message = "Воспроизводится аудио о проезжей части"
-            self.add_message(traffic_message, label=None)
-            self.play_from_queue()
+        traffic_index = 54 if is_audio_playing or self.message_list.count() != 0 else 0
+        self.audio_queue.put((traffic_index, traffic_audio_path))
+        traffic_message = "Воспроизводится аудио о проезжей части"
+        self.add_message(traffic_message, label=None)
 
-        else:
-            traffic_index = 0
-            # Если аудио не воспроизводится или виджет пуст, добавляем сообщение в начало
-            self.audio_queue.put((traffic_index, traffic_audio_path))
-            traffic_message = "Воспроизводится аудио о проезжей части"
-            self.add_message(traffic_message, label=None)
+        if not is_audio_playing or self.message_list.count() != 0:
             self.play_from_queue()
 
         self.index_history[traffic_index] = traffic_audio_path
         print(self.index_history)
 
     def add_terror_acts_audio_to_queue(self):
-        # Добавляем аудио о террористических актах в очередь
         base_path = os.path.dirname(os.path.abspath(__file__))
-        sounds_folder = "Sound\drygoe"
-        terror_acts_audio_filename = "Террор акты.mp3"  # Имя файла аудио о террористических актах
+        sounds_folder = "Sound/drygoe"
+        terror_acts_audio_filename = "Террор акты.mp3"
         terror_acts_audio_path = os.path.join(base_path, sounds_folder, terror_acts_audio_filename)
 
-
-        # Проверяем, воспроизводится ли аудио
         is_audio_playing = self.is_audio_playing()
+        terror_acts_index = 55
 
-        if is_audio_playing and not self.audio_queue.empty():
-            terror_acts_index = 55  # Вы можете выбрать уникальный индекс для аудио о террористических актах
-            # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
-            self.audio_queue.put((terror_acts_index, terror_acts_audio_path))
-            terror_acts_message = "Воспроизводится аудио о террористических актах"
-            self.add_message(terror_acts_message, label=None)
-
-        elif self.message_list.count() != 0:
-            terror_acts_index = 55  # Вы можете выбрать уникальный индекс для аудио о террористических актах
-            # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
+        if (is_audio_playing and not self.audio_queue.empty()) or self.message_list.count() != 0:
             self.audio_queue.put((terror_acts_index, terror_acts_audio_path))
             terror_acts_message = "Воспроизводится аудио о террористических актах"
             self.add_message(terror_acts_message, label=None)
             self.play_from_queue()
-
         else:
             terror_acts_message = 0
-            # Если аудио не воспроизводится или виджет пуст, добавляем сообщение в начало
             self.audio_queue.put((terror_acts_index, terror_acts_audio_path))
-            terror_acts_message = "Воспроизводится аудио о террористических актах"
             self.add_message(terror_acts_message, label=None)
             self.play_from_queue()
 
@@ -1006,23 +957,23 @@ class MyWindow(QWidget):
 
     def add_dop_audio_1_queue(self):
         print("Функция add_dop_audio_1_queue вызвана")
+        
         # Абсолютный путь к каталогу с звуковыми файлами
-        base_path = "C:/Users/{}/Desktop/Prog/Sound/drygoe".format(username) 
+        base_path = "C:/Users/{}/Desktop/Prog/Sound/drygoe".format(username)
         dop_audio_filename = "dop1.mp3"  # Имя файла аудио о курении
         dop_audio_path = os.path.join(base_path, dop_audio_filename)
         
         # Проверяем, воспроизводится ли аудио
         is_audio_playing = self.is_audio_playing()
-
+        dop_audio_index = 70
+        
         if is_audio_playing and not self.audio_queue.empty():
-            dop_audio_index = 70  # Вы можете выбрать уникальный индекс для аудио о курении
             # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
             self.audio_queue.put((dop_audio_index, dop_audio_path))
             dop_audio_message = "Воспроизводится доп аудио 1"
             self.add_message(dop_audio_message, label=None)
 
         elif self.message_list.count() != 0:
-            dop_audio_index = 70
             # Если аудио не воспроизводится и виджет пуст, добавляем сообщение в начало
             self.audio_queue.put((dop_audio_index, dop_audio_path))
             dop_audio_message = "Воспроизводится доп аудио 1"
@@ -1031,7 +982,6 @@ class MyWindow(QWidget):
 
         else:
             # Если аудио не воспроизводится или виджет пуст, добавляем сообщение в начало
-            dop_audio_index = 0 
             self.audio_queue.put((dop_audio_index, dop_audio_path))
             dop_audio_message = "Воспроизводится доп аудио 1"
             self.add_message(dop_audio_message, label=None)
@@ -1039,6 +989,7 @@ class MyWindow(QWidget):
 
         self.index_history[dop_audio_index] = dop_audio_path
         print(self.index_history)
+
 
     def add_dop_audio_2_queue(self):
         print("Функция add_dop_audio_1_queue вызвана")
@@ -1047,25 +998,21 @@ class MyWindow(QWidget):
         dop_audio_filename = "dop2.mp3"  # Имя файла аудио о курении
         dop_audio_path = os.path.join(base_path, dop_audio_filename)
 
-        
         # Проверяем, воспроизводится ли аудио
         is_audio_playing = self.is_audio_playing()
+        dop_audio_index = 71
 
         if is_audio_playing and not self.audio_queue.empty():
-            dop_audio_index = 71  # Вы можете выбрать уникальный индекс для аудио о курении
             # Если аудио воспроизводится и виджет не пуст, добавляем сообщение в конец
             self.audio_queue.put((dop_audio_index, dop_audio_path))
             dop_audio_message = "Воспроизводится доп аудио 2"
             self.add_message(dop_audio_message, label=None)
-
         elif self.message_list.count() != 0:
-            dop_audio_index = 71
             # Если аудио не воспроизводится и виджет пуст, добавляем сообщение в начало
             self.audio_queue.put((dop_audio_index, dop_audio_path))
             dop_audio_message = "Воспроизводится доп аудио 2"
             self.add_message(dop_audio_message, label=None)
             self.play_from_queue()
-
         else:
             # Если аудио не воспроизводится или виджет пуст, добавляем сообщение в начало
             dop_audio_index = 0 
@@ -1076,7 +1023,6 @@ class MyWindow(QWidget):
 
         self.index_history[dop_audio_index] = dop_audio_path
         print(self.index_history)
-
 
     def add_dop_audio_3_queue(self):
         print("Функция add_dop_audio_3_queue вызвана")
@@ -1132,7 +1078,6 @@ class MyWindow(QWidget):
                 self.save_dop_audio_2(value)
             elif setting == "Доп аудио 3":
                 self.save_dop_audio_3(value)
-    
             else:
                 print("Функция сохранения для данной настройки не определена.")
         return wrapper
@@ -1219,44 +1164,39 @@ class MyWindow(QWidget):
 
     def show_confirmation(self, label):
         items_to_remove = []  # Создаем список элементов для удаления
+        # Словарь для сопоставления меток с функциями
+        confirmation_tabs = {
+            "Прибытие на посадку": self.show_confirmation_tab1,
+            "Продолжается посадка": self.show_confirmation_tab5,
+            "Завершается посадка": self.show_confirmation_tab2,
+            "Отменен": self.show_confirmation_tab3,
+            "Задерживается": self.show_confirmation_tab4
+        }
 
         for index in range(self.message_list.count()):
             current_item = self.message_list.item(index)
-
             if current_item is not None:
-                # Проверяем, есть ли у сообщения уже установленная метка
                 existing_label = current_item.data(Qt.UserRole)
-
                 try:
                     if existing_label is None and label is not None:
-                        if "Воспроизводится аудио о посадке по билетам" in current_item.text() or "Воспроизводится аудио о проезжей части" in current_item.text() or "Воспроизводится аудио о террористических актах" in current_item.text() or "Воспроизводится доп аудио 1" in current_item.text() or "Воспроизводится доп аудио 2" in current_item.text() or "Воспроизводится доп аудио 3" in current_item.text():
-                            # Игнорируем сообщения о воспроизведении аудио о курении
+                        # Фильтрация сообщений
+                        if any(substring in current_item.text() for substring in ["Воспроизводится аудио о посадке по билетам", "Воспроизводится аудио о проезжей части", "Воспроизводится аудио о террористических актах", "Воспроизводится доп аудио 1", "Воспроизводится доп аудио 2", "Воспроизводится доп аудио 3"]):
                             continue 
 
                         current_item.setData(Qt.UserRole, label)
+                        # Использование словаря для вызова соответствующей функции
+                        confirmation_function = confirmation_tabs.get(label)
+                        if confirmation_function:
+                            confirmation_function(current_item)
 
-                        if label == "Прибытие на посадку":
-                            self.show_confirmation_tab1(current_item)
-                        elif label == "Продолжается посадка":
-                            self.show_confirmation_tab5(current_item)
-                        elif label == "Завершается посадка":
-                            self.show_confirmation_tab2(current_item)
-                        elif label == "Отменен":
-                            self.show_confirmation_tab3(current_item)
-                        elif label == "Задерживается":
-                            self.show_confirmation_tab4(current_item)
-         
-                        # Добавляем статус кнопки к тексту сообщения
                         status_text = f"{current_item.text()} ⸺ {label}"
                         current_item.setText(status_text)
-
                 except Exception as e:
-                    # Обработка исключения (вывод или логирование ошибки)
                     print(f"Error processing confirmation: {e}")
 
-        # Удаляем элементы, которые не соответствуют условиям
-        for item in items_to_remove:
-            self.message_list.takeItem(self.message_list.row(item))
+            # Удаляем элементы, которые не соответствуют условиям
+            for item in items_to_remove:
+                self.message_list.takeItem(self.message_list.row(item))
 
 
 
@@ -1269,25 +1209,24 @@ class MyWindow(QWidget):
                 item.setBackground(color)
 
     def handle_audio_finished(self):
-        # Обработка завершения проигрывания аудио
         self.playing = False
-        # Задержка перед продолжением
         pygame.time.delay(2000)
 
-        # Удаление первого элемента из списка сообщений, если таковой имеется
+        # Проверяем, есть ли сообщения в списке
         if self.message_list.count() > 0:
-            first_item = self.message_list.takeItem(0)
-            del first_item
+            # Удаляем первый элемент списка сообщений
+            del_item = self.message_list.takeItem(0)
+            del del_item
 
-        # Проверка наличия следующего элемента в списке сообщений
-        if self.message_list.count() > 0:
-            # Если есть следующее сообщение, извлекаем его текст и проигрываем аудио
-            next_item = self.message_list.item(0)
-            next_message_text = next_item.text()
-            self.play_audio_from_message(next_message_text)
-        else:
-            # Если список сообщений пуст, останавливаем таймер проверки аудио
-            self.audio_check_timer.stop()
+            # Проверяем, остались ли еще сообщения в списке
+            if self.message_list.count() > 0:
+                # Если есть, проигрываем аудио для следующего сообщения
+                next_item = self.message_list.item(0)
+                self.play_audio_from_message(next_item.text())
+            else:
+                # Если нет, останавливаем таймер проверки аудио
+                self.audio_check_timer.stop()
+
 
 
 
@@ -3329,7 +3268,7 @@ class MyWindow(QWidget):
                             datetime.today(), current_time)
 
                         # Проверка, попадает ли разница во времени в указанный диапазон
-                        if timedelta(0) <= time_difference <= timedelta(hours=15):
+                        if timedelta(0) <= time_difference <= timedelta(hours=1):
                             # Форматирование времени отправления и прибытия
                             departure_time_formatted = departure_time.strftime("%H:%M")
                             arrival_time_formatted = arrival_time.strftime("%H:%M")
